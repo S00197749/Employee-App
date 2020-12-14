@@ -216,9 +216,6 @@ namespace Employee_App
                     selectedPTEmployee.HourlyRate = Convert.ToDecimal(tbxHourlyRate.Text);
                 }
             }
-            //update display manually
-            lbxEmployees.ItemsSource = null;
-            lbxEmployees.ItemsSource = employees;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
