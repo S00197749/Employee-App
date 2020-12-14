@@ -47,6 +47,10 @@ namespace Employee_App
 
         private void lbxEmployees_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            tbxSalary.Clear();
+            tbxHoursWorked.Clear();
+            tbxHourlyRate.Clear();
+
             Employee selectedEmployee = lbxEmployees.SelectedItem as Employee;
 
             if(selectedEmployee != null)
@@ -56,13 +60,18 @@ namespace Employee_App
 
                 if(selectedEmployee is FullTimeEmployee)
                 {
+                    FullTimeEmployee selectedFTEmployee = selectedEmployee as FullTimeEmployee;
                     rbFullTime.IsChecked = true;
-                    //tbxSalary.Text = selectedEmployee;
+                    tbxSalary.Text = selectedFTEmployee.Salary.ToString();
+                    tblkCalcMonthlyPay.Text = ("€" + selectedFTEmployee.CalculateMonthlyPay().ToString("F"));
                 }
                 else if (selectedEmployee is PartTimeEmployee)
                 {
+                    PartTimeEmployee selectedPTEmployee = selectedEmployee as PartTimeEmployee;
                     rbPartTime.IsChecked = true;
-                    //tbxSalary.Text = selectedEmployee;
+                    tbxHoursWorked.Text = selectedPTEmployee.HoursWorked.ToString();
+                    tbxHourlyRate.Text = selectedPTEmployee.HourlyRate.ToString();
+                    tblkCalcMonthlyPay.Text = ("€" + selectedPTEmployee.CalculateMonthlyPay().ToString("F"));
                 }
             }
 
@@ -70,14 +79,14 @@ namespace Employee_App
 
         private void cboxFullTime_Checked(object sender, RoutedEventArgs e)
         {
+            //clears the ObservableCollection
             filteredEmployees.Clear();
 
-            //find out what was selected
             if (cboxFullTime.IsChecked == true && cboxPartTime.IsChecked == true)
             {
                 lbxEmployees.ItemsSource = employees;
             }
-            else if(cboxFullTime.IsChecked != true && cboxPartTime.IsChecked != true)
+            else if(cboxFullTime.IsChecked == false && cboxPartTime.IsChecked == false)
             {
                 lbxEmployees.ItemsSource = null;
             }
@@ -110,6 +119,7 @@ namespace Employee_App
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
+            //clears every textbox, radio button and tblkCalcMonthlyPay textblock
             tbxFirstName.Clear();
             tbxLastName.Clear();
             rbFullTime.IsChecked = false;
@@ -118,6 +128,70 @@ namespace Employee_App
             tbxHoursWorked.Clear();
             tbxHourlyRate.Clear();
             tblkCalcMonthlyPay.Text = "";
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            //read details from screen
+            string firstName = tbxFirstName.Text;
+            string lastName = tbxLastName.Text;
+            if (rbFullTime.IsChecked == true)
+            {
+                decimal salary = Convert.ToDecimal(tbxSalary.Text);
+                FullTimeEmployee employee = new FullTimeEmployee(firstName, lastName, salary);
+                employees.Add(employee);
+            }
+            else if(rbPartTime.IsChecked == true)
+            {
+                double hoursWorked = Convert.ToDouble(tbxHoursWorked.Text);
+                decimal hourlyRate = Convert.ToDecimal(tbxHourlyRate.Text);
+                PartTimeEmployee employee = new PartTimeEmployee(firstName, lastName, hourlyRate, hoursWorked);
+                employees.Add(employee);
+            }
+            //update display manually
+            lbxEmployees.ItemsSource = null;
+            lbxEmployees.ItemsSource = employees;
+        }
+
+        private void btnUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            //check which employee was selected
+            Employee selectedEmployee = lbxEmployees.SelectedItem as Employee;
+
+            if (selectedEmployee != null)
+            {
+                selectedEmployee.FirstName = tbxFirstName.Text;
+                selectedEmployee.LastName = tbxLastName.Text;
+
+                if (selectedEmployee is FullTimeEmployee)
+                {
+                    FullTimeEmployee selectedFTEmployee = selectedEmployee as FullTimeEmployee;
+                    rbFullTime.IsChecked = true;
+                    selectedFTEmployee.Salary = Convert.ToDecimal(tbxSalary.Text);
+                }
+                else if (selectedEmployee is PartTimeEmployee)
+                {
+                    PartTimeEmployee selectedPTEmployee = selectedEmployee as PartTimeEmployee;
+                    rbPartTime.IsChecked = true;
+                    selectedPTEmployee.HoursWorked = Convert.ToDouble(tbxHoursWorked.Text);
+                    selectedPTEmployee.HourlyRate = Convert.ToDecimal(tbxHourlyRate.Text);
+                }
+            }
+            //update display manually
+            lbxEmployees.ItemsSource = null;
+            lbxEmployees.ItemsSource = employees;
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            //check which employee was selected
+            Employee selectedEmployee = lbxEmployees.SelectedItem as Employee;
+
+            employees.Remove(selectedEmployee);
+
+            //update display manually
+            lbxEmployees.ItemsSource = null;
+            lbxEmployees.ItemsSource = employees;
         }
     }
 }

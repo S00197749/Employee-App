@@ -15,9 +15,9 @@
         <RadioButton x:Name="rbFullTime" Content="FT" HorizontalAlignment="Left" Margin="394,165,0,0" VerticalAlignment="Top" GroupName="Time"/>
         <RadioButton x:Name="rbPartTime" Content="PT" HorizontalAlignment="Left" Margin="460,165,0,0" VerticalAlignment="Top" GroupName="Time"/>
         <Button x:Name="btnClear" Content="Clear" HorizontalAlignment="Left" Margin="662,71,0,0" VerticalAlignment="Top" Width="75" Click="btnClear_Click"/>
-        <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Margin="662,134,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="btnUpdate" Content="Update" HorizontalAlignment="Left" Margin="662,194,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="662,263,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Margin="662,134,0,0" VerticalAlignment="Top" Width="75" Click="btnAdd_Click"/>
+        <Button x:Name="btnUpdate" Content="Update" HorizontalAlignment="Left" Margin="662,194,0,0" VerticalAlignment="Top" Width="75" Click="btnUpdate_Click"/>
+        <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Margin="662,263,0,0" VerticalAlignment="Top" Width="75" Click="btnDelete_Click"/>
         <TextBox x:Name="tbxFirstName" HorizontalAlignment="Left" Height="23" Margin="394,71,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBlock x:Name="tblkCalcMonthlyPay" HorizontalAlignment="Left" Margin="430,376,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBlock x:Name="tblkHourlyRate" HorizontalAlignment="Left" Margin="280,314,0,0" TextWrapping="Wrap" Text="Hourly Rate" VerticalAlignment="Top"/>
